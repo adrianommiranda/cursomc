@@ -11,6 +11,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 
 @Entity /*Anotações do pacote jpa- para fazer o mapeamento objeto-relacional */
 public class Categoria implements Serializable {
@@ -30,6 +33,12 @@ public class Categoria implements Serializable {
 	//Declarei a associacao da categoria com os produtos que é uma lista de produtos e iniciei ela
 	/*@ManyToMany(mappedBy = "Categoria") Relacionamento entre as tabelas*/
 	
+	/*@JsonManagedReference Referencia gerenciada pelo Json, faz isto no lado que vc queira que venha os objetos associados
+	 * No  outro lado na lista de categorias @JsonBackReference. Este faz: do outro lado da associacao já foram buscados os obj.
+	 * Entao agora em não busco  mais.
+	 * Ele vai omitir então a lista de categorias para cada produto
+	 * */
+	@JsonManagedReference
 	@ManyToMany(mappedBy = "categorias")
 	private List<Produto> produtos = new ArrayList<>();
 	
