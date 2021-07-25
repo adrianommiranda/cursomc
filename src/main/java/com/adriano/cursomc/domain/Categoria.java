@@ -1,12 +1,15 @@
 package com.adriano.cursomc.domain;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 
 
 @Entity /*Anotações do pacote jpa- para fazer o mapeamento objeto-relacional */
@@ -22,6 +25,13 @@ public class Categoria implements Serializable {
 	private Integer id;
 	private String nome;
 	
+	
+	//criando uma lista e produtos
+	//Declarei a associacao da categoria com os produtos que é uma lista de produtos e iniciei ela
+	/*@ManyToMany(mappedBy = "Categoria") Relacionamento entre as tabelas*/
+	
+	@ManyToMany(mappedBy = "categorias")
+	private List<Produto> produtos = new ArrayList<>();
 	
 	
 	//***********************Consturores
@@ -54,6 +64,15 @@ public class Categoria implements Serializable {
 		this.nome = nome;
 	}
 
+
+	
+	public List<Produto> getProdutos() {
+		return produtos;
+	}
+
+	public void setProdutos(List<Produto> produtos) {
+		this.produtos = produtos;
+	}
 	
 	//***********************TO STRING
 	@Override
@@ -79,6 +98,8 @@ public class Categoria implements Serializable {
 		Categoria other = (Categoria) obj;
 		return Objects.equals(id, other.id);
 	}
+
+	
 	
 	
 	
