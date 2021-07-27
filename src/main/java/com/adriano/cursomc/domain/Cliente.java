@@ -16,6 +16,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
 import com.adriano.cursomc.domain.enums.TipoCliente;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 
 @Entity
@@ -33,6 +35,11 @@ public class Cliente implements Serializable {
 	private Integer tipo;
 	
 	//criando a associação - endereco tem um clientes e o cliente tem varios endereço r varios telefones
+	/*@JsonManagedReference Associacao siclica, o cliente conhece os enderecos e os enderecos conhece o cliente. 
+	 * Como quero fazer um and point que eu passe o cliente e venha o cliente com os endereços dele, eu vou fazer a protecao
+	 * da seginte forma. O cliente pode serializar os enderecos dele, porem o endereco não.
+	 * Na classe endereco coloco @JsonBackReference*/
+	@JsonManagedReference 
 	@OneToMany(mappedBy = "cliente")
 	private List<Endereco> endereco = new ArrayList<>();
 	
