@@ -56,6 +56,11 @@ public class Cliente implements Serializable {
 	private Set<String> telefones = new HashSet<>();
 	
 	
+	//Associando cliente ao pedido. Pedido tem varios pedidos. Mas ela é bidirecional. O pedidos conhece os clientes.
+	@OneToMany(mappedBy = "cliente")
+	private List<Pedido> pedidos = new ArrayList<>();
+	
+	
 	//construtor
 	public Cliente() {
 		
@@ -149,6 +154,16 @@ public class Cliente implements Serializable {
 	public void setTelefones(Set<String> telefones) {
 		this.telefones = telefones;
 	}
+	
+	
+	public List<Pedido> getPedidos() {
+		return pedidos;
+	}
+
+
+	public void setPedidos(List<Pedido> pedidos) {
+		this.pedidos = pedidos;
+	}
 
 
 
@@ -174,6 +189,12 @@ public class Cliente implements Serializable {
 		Cliente other = (Cliente) obj;
 		return Objects.equals(id, other.id);
 	}
+
+
+
+
+
+	
 	
 	
 	
