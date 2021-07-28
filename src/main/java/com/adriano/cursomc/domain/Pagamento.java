@@ -14,7 +14,10 @@ import javax.persistence.OneToOne;
 import com.adriano.cursomc.domain.enums.EstadoPagamento;
 
 @Entity
-@Inheritance(strategy = InheritanceType.JOINED) //criando tabelas join
+@Inheritance(strategy = InheritanceType.JOINED) //isso é feito na superclasse
+/*A linha acima - criando tabelas join - nao criei um tabelao. Gerei uma tab para cada sub classe
+ *Geralmente quando se tem muitos atributos na subclasse, se coloca tabelas independentes, quando se tem
+ *poucos atributos fazemos o tabelao */
 public abstract class Pagamento implements Serializable {
 	
 private static final long serialVersionUID = 1L;
