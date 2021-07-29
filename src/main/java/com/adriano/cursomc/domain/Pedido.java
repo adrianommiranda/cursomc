@@ -17,7 +17,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 public class Pedido implements Serializable {
@@ -38,7 +37,6 @@ private static final long serialVersionUID = 1L;
 	Com isto fazemos omapeamento bi-direcional 1x1 e ainda garantimos que o id do pagamento vai ser o mesmo pedido
 	correspondente a ele.  */
 	//Vou permitir que o pagamento seja serializado
-	@JsonManagedReference
 	@OneToOne(cascade = CascadeType.ALL, mappedBy = "pedido")
 	private Pagamento pagamento;
 	
@@ -46,7 +44,6 @@ private static final long serialVersionUID = 1L;
 	/*Vou permitir que seja serializado o cliente de um pedido, porem não permito que seja serializado os pedidos de um cliente
 	 * Na classe pedido eu permito o cliente ser serializado e na classe cliente não permito os pedidos
 	 * serem serializados.*/
-	@JsonManagedReference
 	@ManyToOne
 	@JoinColumn(name = "cliente_id")
 	private Cliente cliente;

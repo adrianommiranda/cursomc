@@ -16,8 +16,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
 import com.adriano.cursomc.domain.enums.TipoCliente;
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 
 @Entity
@@ -39,7 +38,7 @@ public class Cliente implements Serializable {
 	 * Como quero fazer um and point que eu passe o cliente e venha o cliente com os endereços dele, eu vou fazer a protecao
 	 * da seginte forma. O cliente pode serializar os enderecos dele, porem o endereco não.
 	 * Na classe endereco coloco @JsonBackReference*/
-	@JsonManagedReference 
+	
 	@OneToMany(mappedBy = "cliente")
 	private List<Endereco> endereco = new ArrayList<>();
 	
@@ -57,7 +56,7 @@ public class Cliente implements Serializable {
 	
 	
 	//Associando cliente ao pedido. Pedido tem varios pedidos. Mas ela é bidirecional. O pedidos conhece os clientes.
-	@JsonBackReference//pedidos do cliente não vao ser serializados
+	@JsonIgnore//pedidos do cliente não vao ser serializados
 	@OneToMany(mappedBy = "cliente")
 	private List<Pedido> pedidos = new ArrayList<>();
 	

@@ -10,7 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Endereco implements Serializable {
@@ -30,7 +30,7 @@ public class Endereco implements Serializable {
 	//As cidades não conhecem os enderecos com isto não preciso mexerna classe cidade
 	/*Caso de serializacao. O endereco conhece a cidade. Mas como é uma associacao direcionada, a cidade não conhece endereco
 	 * Neste caso não teremos problema */
-	@JsonBackReference //Endereco nao pode serializar cliente
+	@JsonIgnore //Endereco nao pode serializar cliente
 	@ManyToOne
 	@JoinColumn(name ="cliente_id")
 	private Cliente cliente;

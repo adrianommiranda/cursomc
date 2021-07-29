@@ -12,7 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 
 
 @Entity /*Anotações do pacote jpa- para fazer o mapeamento objeto-relacional */
@@ -38,7 +38,7 @@ public class Categoria implements Serializable {
 	 * Entao agora em não busco  mais.
 	 * Ele vai omitir então a lista de categorias para cada produto
 	 * */
-	@JsonManagedReference
+	
 	@ManyToMany(mappedBy = "categorias")
 	private List<Produto> produtos = new ArrayList<>();
 	
