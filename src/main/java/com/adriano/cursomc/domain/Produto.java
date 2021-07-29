@@ -2,8 +2,10 @@ package com.adriano.cursomc.domain;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -12,6 +14,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
@@ -42,6 +45,11 @@ public class Produto  implements Serializable {
 	private List<Categoria> categorias = new ArrayList<>();
 	
 	
+	//Vai ter que conhecer os itens pedidos associados a ela
+	@OneToMany(mappedBy = "id.produto")
+	private Set<ItenPedido> itens = new HashSet<>();
+	
+	
 	/*************************Construtores                    */
 	public Produto() {
 		
@@ -58,6 +66,23 @@ public class Produto  implements Serializable {
 
 		
 	/*************************Final Construtores                    */
+	
+	
+	/*Podemos aproveitar implementar este acesso que esta previsto no diagrama. Um produto conhece os pedidos dele.
+	 * Entao posso criar um getpedidos, varrendo os itens pedidos e montando uma lista de pedidos associados a estes itens.
+	 */
+	public List<Pedido> getPedidos(){
+		List<Pedido> lista = new ArrayList<>();
+		for(ItenPedido x : itens) {
+			lista.add(x.getPedido());
+		}
+		return lista;
+	}
+	
+	
+	
+	
+	
 	
 	
 	/*************************GET e SET                    */
@@ -101,7 +126,14 @@ public class Produto  implements Serializable {
 	}
 
 
-	
+	public Set<ItenPedido> getItens() {
+		return itens;
+	}
+
+
+	public void setItens(Set<ItenPedido> itens) {
+		this.itens = itens;
+	}
 	
 
 	
@@ -126,6 +158,11 @@ public class Produto  implements Serializable {
 		Produto other = (Produto) obj;
 		return Objects.equals(id, other.id);
 	}
+
+
+	
 	
 	/*************************Final hashCode                   */
 }
+
+

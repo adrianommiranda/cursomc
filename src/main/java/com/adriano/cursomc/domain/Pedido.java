@@ -2,7 +2,9 @@ package com.adriano.cursomc.domain;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -11,6 +13,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 @Entity
@@ -46,6 +49,11 @@ private static final long serialVersionUID = 1L;
 	/*Realizando o mapeamento jpa(objeto relacional) - Pagamento e pedido é 1x1. Quando é 1x1, nos queremos que o pagamento,
 	 * tenha o mesmo id do pedido daquele pagamento. Vamos começar mapeando o id do pagamento, para informar que sera o mesmo 
 	 * id do pedido*/
+	
+	
+	//Vai ter que conhecer os itens pedidos associados a ela
+	@OneToMany(mappedBy = "id.pedido")
+	private Set<ItenPedido> itens = new HashSet<>();
 	
 	public Pedido() {
 		
@@ -110,6 +118,17 @@ private static final long serialVersionUID = 1L;
 		this.enderecoDeEntrega = enderecoDeEntrega;
 	}
 
+	
+	
+	public Set<ItenPedido> getItens() {
+		return itens;
+	}
+
+
+	public void setItens(Set<ItenPedido> itens) {
+		this.itens = itens;
+	}
+	
 
 	@Override
 	public int hashCode() {
@@ -128,6 +147,9 @@ private static final long serialVersionUID = 1L;
 		Pedido other = (Pedido) obj;
 		return Objects.equals(id, other.id);
 	}
+
+
+	
 	
 	
 	

@@ -13,6 +13,8 @@ import com.adriano.cursomc.domain.Cidade;
 import com.adriano.cursomc.domain.Cliente;
 import com.adriano.cursomc.domain.Endereco;
 import com.adriano.cursomc.domain.Estado;
+import com.adriano.cursomc.domain.ItemPedidoPK;
+import com.adriano.cursomc.domain.ItenPedido;
 import com.adriano.cursomc.domain.Pagamento;
 import com.adriano.cursomc.domain.PagamentoComBoleto;
 import com.adriano.cursomc.domain.PagamentocomCartao;
@@ -25,6 +27,7 @@ import com.adriano.cursomc.repositories.CidadeRepository;
 import com.adriano.cursomc.repositories.ClienteRepository;
 import com.adriano.cursomc.repositories.EnderecoRepository;
 import com.adriano.cursomc.repositories.EstadoRepository;
+import com.adriano.cursomc.repositories.ItemPedidoRepository;
 import com.adriano.cursomc.repositories.PagamentoRepository;
 import com.adriano.cursomc.repositories.PedidoRepository;
 import com.adriano.cursomc.repositories.ProdutoRepository;
@@ -53,6 +56,9 @@ public class CursomcApplication implements CommandLineRunner{
 	private PedidoRepository pedidoRepository;
 	@Autowired 
 	PagamentoRepository pagamentoRepository;
+	
+	@Autowired
+	private ItemPedidoRepository itemPedidoRepository;
 	
 	public static void main(String[] args) {
 		SpringApplication.run(CursomcApplication.class, args);
@@ -123,7 +129,7 @@ public class CursomcApplication implements CommandLineRunner{
 		clienteRepository.saveAll(Arrays.asList(cli1));
 		enderecoRepository.saveAll(Arrays.asList(e1,e2));
 		
-		//Instanciando Pedido
+		//Instanciando Pedido - vamos criar um obj auxiliar SimpleDateFormat
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");//mascara de formatação para instanciar uma data
 		Pedido ped1 = new Pedido(null, sdf.parse("30/09/2017 10:32"), cli1, e1);
 		Pedido ped2 = new Pedido(null, sdf.parse("10/10/2017 19:35"), cli1, e2);
@@ -140,6 +146,23 @@ public class CursomcApplication implements CommandLineRunner{
 		//Salvando no banco
 		pedidoRepository.saveAll(Arrays.asList(ped1,ped2));
 		pagamentoRepository.saveAll(Arrays.asList(pagto1,pagto2));
+		
+		
+		//Instanciando Item_pedido
+		ItenPedido ip1 = new ItenPedido(ped1, p1, 0.00, 1, 2000.00);
+		ItenPedido ip2 = new ItenPedido(ped1, p3, 0.00, 2, 80.00);
+		ItenPedido ip3 = new ItenPedido(ped2, p2, 100.00, 1, 800.00);
+		
+		ped1.getItens().addAll(Arrays.asList(ip1));
+		ped2.getItens().addAll(Arrays.asList(ip3));
+		
+		p1.getItens().addAll(Arrays.asList(ip1));
+		p2.getItens().addAll(Arrays.asList(ip2));
+		p3.getItens().addAll(Arrays.asList(ip3));
+		
+		
+		//salvando no banco
+		itemPedidoRepository.saveAll(Arrays.asList(ip1,ip2,ip3));
 	}
 
 }
