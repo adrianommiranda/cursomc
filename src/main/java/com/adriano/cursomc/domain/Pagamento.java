@@ -12,6 +12,7 @@ import javax.persistence.MapsId;
 import javax.persistence.OneToOne;
 
 import com.adriano.cursomc.domain.enums.EstadoPagamento;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED) //isso é feito na superclasse
@@ -33,6 +34,7 @@ private static final long serialVersionUID = 1L;
 	 * coluna correspondente ao ID do pedido @JoinColumn(name="pedido_id")
 	 * Para garantir que este id do pagamento seja o mesmo do pedido @MapsId*/
 	
+	@JsonBackReference
 	@OneToOne
 	@JoinColumn(name="pedido_id")
 	@MapsId

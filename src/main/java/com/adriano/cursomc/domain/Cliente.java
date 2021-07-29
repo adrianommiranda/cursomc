@@ -57,6 +57,7 @@ public class Cliente implements Serializable {
 	
 	
 	//Associando cliente ao pedido. Pedido tem varios pedidos. Mas ela é bidirecional. O pedidos conhece os clientes.
+	@JsonBackReference//pedidos do cliente não vao ser serializados
 	@OneToMany(mappedBy = "cliente")
 	private List<Pedido> pedidos = new ArrayList<>();
 	

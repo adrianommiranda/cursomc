@@ -7,6 +7,8 @@ import javax.persistence.Embeddable;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 /*Conforme aprendemos a classe de acssociacao não tem um id proprio, quem identifica ela sao so dois obkjetos associados a ela
  *o produto e o pedido. Umas das formas deimplementa e criar uma chave composta contendo o produto e o pedido(que iremos fazer).
  *  iremos criar uma classe auxiliar no domain ItemPedidoPK que vai ser a minha chave composta*/
@@ -18,6 +20,7 @@ public class ItenPedido implements Serializable {
 	/*essa classe vai ter como id um obj do tipo ItemPedidoPK - quando voce faz uma entidade do JPA, tendo como atributo 
 	 *uma outra classe  temos que ir na outra classe(ItemPedidoPK) e colocar @Embeddable - para dizer que ela vai ser 
 	 *um subtipo*/
+	@JsonIgnore//não vai ser serializado, o pedido não serializa ninguém(pedido e produto)
 	@EmbeddedId //é um id imbutido em um tipo auxiliar
 	private ItemPedidoPK id = new ItemPedidoPK();
 	
@@ -81,10 +84,11 @@ public class ItenPedido implements Serializable {
 	}
 	
 	//Fizemos manual get pedidos e produtos. Para ter acesso direto ao peido e ao produto fora da minha classe ItemPedido
-	
+	@JsonIgnore//sempre que começa com get vai serializar por isto temos que ignorar
 	public Pedido getPedido() {
 		return id.getPedido();
 	}
+	
 	
 	public Produto getProduto() {
 		return id.getProduto();
